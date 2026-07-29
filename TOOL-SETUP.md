@@ -60,14 +60,14 @@ Preflight chỉ kiểm tra model provider có trả structured tool call. Nó kh
 
 ## 3. Gate matrix
 
-| Capability | Quicktest bắt buộc? | Ghi chú |
-|---|---|---|
-| Provider + core APIs dùng trong base eval | Có | Phải pass trước khi chạy eval. |
-| Tool mới đầu tiên do team viết | Có | Quicktest bằng gọi tool trực tiếp. |
-| Tool mới bổ sung để lấy bonus | Khi claim bonus | Phải có quicktest và evidence như tool bắt buộc. |
-| UI | Có | Mở được và chạy được luồng demo chính. |
-| Optional built-ins (`policy`, `papers`, `paper_text`, `send`) | Chỉ khi demo/dùng | Fail ở đây không chặn core; trong eval để Telegram creds unset. |
-| Extension suite | Không | Chỉ chạy khi team chọn dùng optional built-ins. |
+| Capability                                                            | Quicktest bắt buộc? | Ghi chú                                                               |
+| --------------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------- |
+| Provider + core APIs dùng trong base eval                            | Có                   | Phải pass trước khi chạy eval.                                     |
+| Tool mới đầu tiên do team viết                                   | Có                   | Quicktest bằng gọi tool trực tiếp.                                 |
+| Tool mới bổ sung để lấy bonus                                    | Khi claim bonus       | Phải có quicktest và evidence như tool bắt buộc.                 |
+| UI                                                                    | Có                   | Mở được và chạy được luồng demo chính.                      |
+| Optional built-ins (`policy`, `papers`, `paper_text`, `send`) | Chỉ khi demo/dùng   | Fail ở đây không chặn core; trong eval để Telegram creds unset. |
+| Extension suite                                                       | Không                | Chỉ chạy khi team chọn dùng optional built-ins.                    |
 
 Optional quicktest fail không chặn core nếu tool không xuất hiện trong base/group/demo. Tuy nhiên, declaration còn trong `tools.yaml` vẫn được gửi cho model; gọi nhầm optional tool vẫn là lỗi routing core.
 

@@ -1,7 +1,277 @@
 {
-  "dataset_id": "day04_v2_research_group",
+  "dataset_id": "day04_g18_eval_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
+  "description": "Eval riêng nhóm G18: 5 single-turn + 5 multi-turn. Kiểm tra routing, arg mapping, boundary và multi-turn context carryover trên các tình huống chưa có trong eval_base.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_timeframe_month",
+      "phase": "B",
+      "query": "Tin tức về Starlink trong tháng này",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Starlink",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "arg_timeframe_month",
+        "difficulty": "medium",
+        "what_it_tests": "'tháng này' → timeframe=month; topic=news vì hỏi tin tức."
+      }
+    },
+    {
+      "id": "G02_social_search_latest",
+      "phase": "B",
+      "query": "Tìm tweet mới nhất về ChatGPT",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "ChatGPT",
+              "search_type": "Latest"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "arg_search_type_latest",
+        "difficulty": "medium",
+        "what_it_tests": "'mới nhất' không phải 'nổi bật/top' → search_type=Latest, không phải Top."
+      }
+    },
+    {
+      "id": "G03_timeline_bill_gates",
+      "phase": "B",
+      "query": "Tweet gần đây của Bill Gates",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "BillGates"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_user_tweets_name_to_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Tin CỦA Bill Gates → map tên thành handle BillGates rồi gọi timeline."
+      }
+    },
+    {
+      "id": "G04_out_of_scope_translation",
+      "phase": "B",
+      "query": "Dịch câu này sang tiếng Anh giúp mình: 'Trí tuệ nhân tạo đang thay đổi thế giới'",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy",
+        "what_it_tests": "Yêu cầu dịch thuật ngoài phạm vi research → KHÔNG gọi tool, từ chối/định hướng."
+      }
+    },
+    {
+      "id": "G05_confirm_before_send_slack",
+      "phase": "B",
+      "query": "Chia sẻ bài này lên Slack cho nhóm mình nhé",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "confirm_before_write",
+        "difficulty": "medium",
+        "what_it_tests": "Hành động ghi (chia sẻ) → phải hỏi xác nhận yes_no trước, không tự gửi."
+      }
+    },
+    {
+      "id": "G06_switch_timeline_to_social",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tweet mới nhất của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Thôi quên đi, tìm xem mọi người đang bàn gì về Tesla trên Twitter"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ cần kết quả về Tesla thôi"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Tesla"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_switch_tool",
+        "difficulty": "hard",
+        "what_it_tests": "Multi-turn: user đổi từ timeline sang social_search; chỉ gọi 1 tool mới, không gọi lại timeline."
+      }
+    },
+    {
+      "id": "G07_carryover_timeframe_month",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin blockchain tháng này"
+        },
+        {
+          "role": "user",
+          "content": "Tìm thêm về DeFi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn là tin tháng này nhé"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "DeFi",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_carryover_timeframe",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry timeframe=month từ lượt 1, query đổi sang DeFi, lượt 3 xác nhận giữ timeframe."
+      }
+    },
+    {
+      "id": "G08_switch_lookup_to_fetch",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin về SpaceX hôm nay"
+        },
+        {
+          "role": "user",
+          "content": "Bỏ đó, tóm tắt bài này luôn đi"
+        },
+        {
+          "role": "user",
+          "content": "https://spacex.com/updates"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://spacex.com/updates"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_switch_to_fetch",
+        "difficulty": "hard",
+        "what_it_tests": "Multi-turn: user đổi từ lookup sang fetch URL cụ thể; URL ở lượt 3 → gọi fetch đúng URL, không gọi lookup."
+      }
+    },
+    {
+      "id": "G09_no_tool_cancel",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin AI hôm nay có gì mới?"
+        },
+        {
+          "role": "user",
+          "content": "Tìm thêm về GPT-5 đi"
+        },
+        {
+          "role": "user",
+          "content": "Thôi không cần nữa, cảm ơn bạn nhé"
+        }
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "metadata": {
+        "skill": "multiturn_no_tool_cancel",
+        "difficulty": "medium",
+        "what_it_tests": "Multi-turn: user hủy yêu cầu ở lượt 3 → KHÔNG gọi tool, phản hồi thông thường."
+      }
+    },
+    {
+      "id": "G10_correction_search_type_top",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tweet về Gemini AI"
+        },
+        {
+          "role": "user",
+          "content": "Cho mình kết quả nổi bật nhất thôi"
+        },
+        {
+          "role": "user",
+          "content": "Về chủ đề Gemini AI nhé"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Gemini AI",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_correction_search_type",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry query='Gemini AI', lượt 2 đổi search_type thành Top vì 'nổi bật nhất', lượt 3 xác nhận chủ đề."
+      }
+    }
+  ]
 }

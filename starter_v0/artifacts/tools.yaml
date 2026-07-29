@@ -1,15 +1,14 @@
-# starter_v0 — tool declarations (intentionally vague).
-# Names and descriptions here are a rough first draft. Routing rules, name->handle
-# mapping, arg conventions (news/timeframe/Top), and the send-confirmation boundary
-# are NOT spelled out anywhere yet. Your job is to make these declarations + the
-# system prompt good enough that the agent routes correctly on the eval.
+# starter_v0 — tool declarations.
+# Keep tool names stable across this file, tools/__init__.py, and eval datasets.
+# Routing intent is encoded in each description below to reduce wrong_tool/
+# wrong_arg_value failures during eval and live demo.
 #
 # If you rename a tool, keep the name in sync across:
 #   this file  ->  tools/__init__.py (TOOL_FUNCTIONS)  ->  data/eval_base.json + data/eval_research_extension.json
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Dùng khi thiếu thông tin hoặc cần xác nhận trước hành động nhạy cảm. response_type=text để hỏi bổ sung; yes_no để xác nhận; choice khi có danh sách chọn."
     parameters:
       type: object
       properties:
@@ -19,7 +18,7 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Lấy bài đăng gần đây CUA MỘT TÀI KHOẢN CỤ THỂ trên X/Twitter. Chỉ dùng khi đã biết screenname. Nếu user nêu tên người nổi tiếng, map sang handle quen thuộc (ví dụ: Sam Altman->sama, Elon Musk->elonmusk, Andrej Karpathy->karpathy)."
     parameters:
       type: object
       properties:
@@ -28,7 +27,7 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm bài đăng THEO CHỦ ĐỀ/từ khóa trên X/Twitter, không gắn với 1 tài khoản cụ thể. Dùng search_type=Top khi user nói 'top', 'phổ biến', 'nổi bật'; dùng Latest cho tin mới nhất theo thời gian."
     parameters:
       type: object
       properties:
@@ -38,7 +37,7 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tra cứu web. Với yêu cầu 'tin tức/hôm nay/tuần này' dùng topic=news và đặt timeframe tương ứng (hôm nay->day, tuần này->week, tháng này->month, năm nay->year). Với tra cứu chung dùng topic=general."
     parameters:
       type: object
       properties:
@@ -49,7 +48,7 @@ tools:
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Đọc nội dung từ URL cụ thể đã có sẵn trong yêu cầu. Không dùng để tìm kiếm web mới. Nếu user nói 'bài này' nhưng chưa có URL, hãy gọi clarify để xin link trước."
     parameters:
       type: object
       properties:
@@ -57,7 +56,7 @@ tools:
       required: [url]
 
   - name: format
-    description: "Trình bày dữ liệu đã có thành văn bản."
+    description: "Chỉ dùng để trình bày lại dữ liệu đã thu thập (items) thành digest. Không dùng để truy xuất dữ liệu mới."
     parameters:
       type: object
       properties:
@@ -79,7 +78,7 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Gửi văn bản ra kênh ngoài (Telegram). Boundary bắt buộc: chỉ gọi sau khi user đã xác nhận rõ ràng yes/no. Nếu chưa xác nhận, phải gọi clarify với response_type=yes_no trước."
     parameters:
       type: object
       properties:
@@ -88,7 +87,7 @@ tools:
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Tìm trong policy nội bộ của công ty để trả lời câu hỏi compliance, publish, privacy, citation, tool usage."
     parameters:
       type: object
       properties:
@@ -98,7 +97,7 @@ tools:
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Tìm paper trên arXiv theo từ khóa/chủ đề nghiên cứu."
     parameters:
       type: object
       properties:
@@ -108,7 +107,7 @@ tools:
       required: [query]
 
   - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
+    description: "Trích text từ 1 paper arXiv cụ thể (URL hoặc arXiv id) để đọc nội dung chi tiết."
     parameters:
       type: object
       properties:
