@@ -1,0 +1,16 @@
+{
+  "transcript_id": "ui_gemini_20260729T101913809956",
+  "version": "ui",
+  "artifact_version": "ui+peb1c8179815b+t6cdb53d5d7b8",
+  "prompt_hash": "eb1c8179815bd79d34de7d326420bb99b3072e6e8ae96464c02d4411f905fc68",
+  "tools_hash": "6cdb53d5d7b8de80d60b298b1357f462cedbedfae261d5ba60b08ccc401687c5",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "system_prompt": "C:\\Users\\Fptshop123\\Desktop\\AIThucChien\\Day4\\Lap\\K3-DAY4-G18\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\Fptshop123\\Desktop\\AIThucChien\\Day4\\Lap\\K3-DAY4-G18\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T10:19:13",
+  "updated_at": "2026-07-29T10:19:13",
+  "turns": []
+}

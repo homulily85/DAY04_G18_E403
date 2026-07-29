@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research Agent</title>
+    <link rel="stylesheet" href="/starter_v0/ui/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Local Lab UI</p>
+        <h1>Research Agent</h1>
+      </div>
+
+      <dl class="meta">
+        <div>
+          <dt>Provider</dt>
+          <dd id="provider">...</dd>
+        </div>
+        <div>
+          <dt>Model</dt>
+          <dd id="model">...</dd>
+        </div>
+        <div>
+          <dt>Version</dt>
+          <dd id="version">...</dd>
+        </div>
+        <div>
+          <dt>Artifact</dt>
+          <dd id="artifact">...</dd>
+        </div>
+        <div>
+          <dt>Transcript</dt>
+          <dd id="transcript">...</dd>
+        </div>
+      </dl>
+
+      <button id="newTranscript" class="secondary" type="button">New transcript</button>
+    </aside>
+
+    <main class="workspace">
+      <section id="chat" class="chat" aria-live="polite"></section>
+
+      <form id="composer" class="composer">
+        <textarea id="message" rows="2" placeholder="Ask the agent to research, fetch, summarize, or clarify..."></textarea>
+        <button id="send" type="submit">Send</button>
+      </form>
+    </main>
+
+    <template id="turnTemplate">
+      <article class="turn">
+        <div class="bubble user"></div>
+        <div class="bubble assistant">
+          <div class="answer"></div>
+          <details class="trace" open>
+            <summary>Tool trace</summary>
+            <div class="rounds"></div>
+          </details>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
