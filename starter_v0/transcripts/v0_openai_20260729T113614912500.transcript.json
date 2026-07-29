@@ -1,0 +1,45 @@
+{
+  "transcript_id": "v0_openai_20260729T113614912500",
+  "version": "v0",
+  "artifact_version": "v0+p10e1a8f8e296+td53127a8f8b3",
+  "prompt_hash": "10e1a8f8e2962a1d21ca45ea596f0447a3eb7597b1bc0ec888acb24949c06f57",
+  "tools_hash": "d53127a8f8b3ca2374930efed239577715daa679058a2745525b63d4d0987e1f",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:36:14",
+  "updated_at": "2026-07-29T11:36:28",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:36:21",
+      "user": "Thời tiết hôm nay",
+      "status": "provider_error",
+      "assistant_text": "Provider Error: Missing API key env var: OPENAI_API_KEY",
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Missing API key env var: OPENAI_API_KEY",
+      "ended_at": "2026-07-29T11:36:21"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T11:36:27",
+      "user": "Thời tiết hôm nay\n\n",
+      "status": "answered",
+      "assistant_text": "Bạn vui lòng cho biết tên thành phố mà bạn muốn kiểm tra thời tiết hôm nay.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Bạn vui lòng cho biết tên thành phố mà bạn muốn kiểm tra thời tiết hôm nay.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T11:36:28"
+    }
+  ]
+}

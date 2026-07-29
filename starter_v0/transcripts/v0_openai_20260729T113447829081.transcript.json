@@ -1,0 +1,86 @@
+{
+  "transcript_id": "v0_openai_20260729T113447829081",
+  "version": "v0",
+  "artifact_version": "v0+p10e1a8f8e296+td53127a8f8b3",
+  "prompt_hash": "10e1a8f8e2962a1d21ca45ea596f0447a3eb7597b1bc0ec888acb24949c06f57",
+  "tools_hash": "d53127a8f8b3ca2374930efed239577715daa679058a2745525b63d4d0987e1f",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:34:47",
+  "updated_at": "2026-07-29T11:35:08",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:34:54",
+      "user": "Thời tiết hôm nay",
+      "status": "answered",
+      "assistant_text": "Bạn có thể cho tôi biết tên thành phố mà bạn muốn kiểm tra thời tiết không?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Bạn có thể cho tôi biết tên thành phố mà bạn muốn kiểm tra thời tiết không?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T11:34:57"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T11:35:05",
+      "user": "Tại Hà nội",
+      "status": "answered",
+      "assistant_text": "Hiện tại, tôi không thể truy cập thông tin thời tiết do thiếu cấu hình API. Bạn có thể kiểm tra thời tiết tại Hà Nội thông qua các trang web thời tiết như Weather.com hoặc ứng dụng thời tiết trên điện thoại của bạn. Nếu bạn cần thông tin khác, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "weather",
+              "args": {
+                "city": "Hanoi"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "weather",
+              "args": {
+                "city": "Hanoi"
+              },
+              "result": {
+                "error": "missing_api_key",
+                "message": "Thiếu cấu hình OPENWEATHER_API_KEY trong file .env."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Hiện tại, tôi không thể truy cập thông tin thời tiết do thiếu cấu hình API. Bạn có thể kiểm tra thời tiết tại Hà Nội thông qua các trang web thời tiết như Weather.com hoặc ứng dụng thời tiết trên điện thoại của bạn. Nếu bạn cần thông tin khác, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "weather",
+          "args": {
+            "city": "Hanoi"
+          },
+          "result": {
+            "error": "missing_api_key",
+            "message": "Thiếu cấu hình OPENWEATHER_API_KEY trong file .env."
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T11:35:08"
+    }
+  ]
+}

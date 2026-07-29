@@ -1,0 +1,94 @@
+{
+  "transcript_id": "v0_openai_20260729T113746817424",
+  "version": "v0",
+  "artifact_version": "v0+p4604950461ab+td53127a8f8b3",
+  "prompt_hash": "4604950461abd0e535d25783285b8b78de3f3081cca0e74c4797b5af835b0a03",
+  "tools_hash": "d53127a8f8b3ca2374930efed239577715daa679058a2745525b63d4d0987e1f",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:37:46",
+  "updated_at": "2026-07-29T11:37:56",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:37:46",
+      "user": "Thời tiết hôm nay",
+      "status": "provider_error",
+      "assistant_text": "Provider Error: Missing API key env var: OPENAI_API_KEY",
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Missing API key env var: OPENAI_API_KEY",
+      "ended_at": "2026-07-29T11:37:47"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T11:37:51",
+      "user": "Thời tiết hôm nay\n\n",
+      "status": "answered",
+      "assistant_text": "Thời tiết hôm nay tại Hà Nội:\n\n- Nhiệt độ: 31.6°C\n- Cảm giác như: 36.8°C\n- Độ ẩm: 62%\n- Mô tả thời tiết: Mưa nhẹ\n- Tốc độ gió: 3.2 m/s\n\nNếu bạn cần thêm thông tin, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "weather",
+              "args": {
+                "city": "Hanoi"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "weather",
+              "args": {
+                "city": "Hanoi"
+              },
+              "result": {
+                "city": "Hà Nội",
+                "country": "VN",
+                "temp": 31.6,
+                "feels_like": 36.8,
+                "humidity": 62,
+                "description": "Mưa nhẹ",
+                "icon": "10d",
+                "wind_speed": 3.2,
+                "units": "°C"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Thời tiết hôm nay tại Hà Nội:\n\n- Nhiệt độ: 31.6°C\n- Cảm giác như: 36.8°C\n- Độ ẩm: 62%\n- Mô tả thời tiết: Mưa nhẹ\n- Tốc độ gió: 3.2 m/s\n\nNếu bạn cần thêm thông tin, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "weather",
+          "args": {
+            "city": "Hanoi"
+          },
+          "result": {
+            "city": "Hà Nội",
+            "country": "VN",
+            "temp": 31.6,
+            "feels_like": 36.8,
+            "humidity": 62,
+            "description": "Mưa nhẹ",
+            "icon": "10d",
+            "wind_speed": 3.2,
+            "units": "°C"
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T11:37:56"
+    }
+  ]
+}
