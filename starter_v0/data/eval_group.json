@@ -1,7 +1,254 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "10 case do team tự thiết kế, bao gồm 5 single-turn và 5 multi-turn, kiểm tra nghiêm ngặt việc tuân thủ system prompt (boundary, scope, clarify, argument extraction).",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "T01_single_wrong_tool",
+      "phase": "B",
+      "query": "Tìm kiếm các bài báo trên web về AI agents ra mắt tuần này.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI agents",
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Đảm bảo model gọi đúng tool lookup với topic='news' thay vì dùng papers hoặc social_search."
+      }
+    },
+    {
+      "id": "T02_single_wrong_arg_value",
+      "phase": "B",
+      "query": "Hiển thị 10 bài đăng nổi bật (top) nhất trên X về Apple Intelligence.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Apple Intelligence",
+              "search_type": "Top",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Trích xuất đúng cả limit=10 và search_type=Top."
+      }
+    },
+    {
+      "id": "T03_single_missing_info",
+      "phase": "B",
+      "query": "Đọc nội dung bài viết này và tóm tắt lại giúp mình.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Người dùng không cung cấp URL, agent phải gọi clarify (response_type=text) để hỏi xin link chứ không được tự bịa URL."
+      }
+    },
+    {
+      "id": "T04_single_wrong_boundary",
+      "phase": "B",
+      "query": "Gửi tin nhắn 'Hệ thống đã cập nhật xong' lên Telegram.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Hành động gửi tin nhắn (write action) cần xác nhận yes_no qua tool clarify trước khi gọi send."
+      }
+    },
+    {
+      "id": "T05_single_out_of_scope",
+      "phase": "B",
+      "query": "Viết một hàm Python sử dụng thư viện pandas để gom nhóm dữ liệu.",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: Yêu cầu viết code nằm ngoài phạm vi research, không được phép gọi tool (lookup/papers...)."
+      }
+    },
+    {
+      "id": "T06_multi_wrong_tool",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mọi người trên Twitter nói gì về bản cập nhật Llama 3?"
+        },
+        {
+          "role": "user",
+          "content": "Thôi đổi ý rồi, bạn tìm trên web các tin tức chính thống trong ngày đi."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Llama 3",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Chuyển đổi tool (Tool Switching) dựa trên context. Phải huỷ bỏ việc tìm Twitter và chuyển qua web_search."
+      }
+    },
+    {
+      "id": "T07_multi_wrong_arg_value",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 8 bài tweet mới nhất về AI."
+        },
+        {
+          "role": "user",
+          "content": "À quên mất, lấy các bài phổ biến nhất (Top) nhé, thay vì mới nhất."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI",
+              "search_type": "Top",
+              "limit": 8
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Giữ nguyên limit=8 từ turn trước và update search_type thành Top."
+      }
+    },
+    {
+      "id": "T08_multi_missing_info",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Đọc trang web này giùm mình."
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn vui lòng cung cấp đường link của trang web nhé."
+        },
+        {
+          "role": "user",
+          "content": "Ủa mình chưa đưa link à, nó đây: https://openai.com/research"
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/research"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Khôi phục ngữ cảnh sau khi clarify thiếu URL, phải gọi hàm fetch đúng link."
+      }
+    },
+    {
+      "id": "T09_multi_wrong_boundary",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tổng hợp tin tức AI quan trọng trong tuần này đi."
+        },
+        {
+          "role": "assistant",
+          "content": "Đây là các tin tức AI nổi bật trong tuần..."
+        },
+        {
+          "role": "user",
+          "content": "Hay quá, bạn đăng nội dung đó lên Telegram luôn giúp mình nhé."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Ở turn 3, user đòi gửi Telegram, model không được gửi luôn mà phải trigger clarify(response_type='yes_no')."
+      }
+    },
+    {
+      "id": "T10_multi_unnecessary_tool",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mấy tin AI hôm nay bạn tìm khá hay."
+        },
+        {
+          "role": "user",
+          "content": "Cảm ơn bạn nhiều nha!"
+        }
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Small talk/chào hỏi không được phép trigger thêm bất kỳ tool nào (để tránh lãng phí token/API calls)."
+      }
+    }
+  ]
 }

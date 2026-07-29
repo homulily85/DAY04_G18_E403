@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v0_openai_20260729T111136522666",
+  "version": "v0",
+  "artifact_version": "v0+p10e1a8f8e296+t740c41d0d6b3",
+  "prompt_hash": "10e1a8f8e2962a1d21ca45ea596f0447a3eb7597b1bc0ec888acb24949c06f57",
+  "tools_hash": "740c41d0d6b3b13f202c73dea68f1cf6e506ea547a80059c157b73cdb93b493e",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/homulily/code/vinno/DAY04_G18_E403/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:11:36",
+  "updated_at": "2026-07-29T11:11:47",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:11:47",
+      "user": "Tweet mới nhất của elon musk",
+      "status": "provider_error",
+      "assistant_text": "Provider Error: Missing API key env var: OPENROUTER_API_KEY",
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Missing API key env var: OPENROUTER_API_KEY",
+      "ended_at": "2026-07-29T11:11:47"
+    }
+  ]
+}
