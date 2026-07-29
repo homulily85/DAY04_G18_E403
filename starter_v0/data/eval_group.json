@@ -1,7 +1,237 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "Bộ 10 eval cases của nhóm (5 single-turn + 5 multi-turn) bao gồm kiểm thử tool thời tiết weather mới và các kịch bản thực tế.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_weather_routing",
+      "phase": "B",
+      "query": "Thời tiết Hà Nội hôm nay thế nào?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "city": "Hanoi"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tra cứu thời tiết thành phố Hà Nội bằng tool weather mới."
+      }
+    },
+    {
+      "id": "G02_weather_imperial",
+      "phase": "B",
+      "query": "Cho mình xem thời tiết Tokyo tính bằng độ F.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "city": "Tokyo",
+              "units": "imperial"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tra cứu thời tiết có tham số đơn vị đo units=imperial."
+      }
+    },
+    {
+      "id": "G03_policy_data_privacy",
+      "phase": "B",
+      "query": "Quy định bảo mật dữ liệu của công ty như thế nào?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "policy",
+            "args": {
+              "query": "bảo mật dữ liệu",
+              "policy_area": "data_privacy"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tra cứu chính sách bảo mật dữ liệu trong tài liệu nội bộ."
+      }
+    },
+    {
+      "id": "G04_arxiv_paper_search",
+      "phase": "B",
+      "query": "Tìm cho mình các bài báo khoa học về Large Language Models.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "Large Language Models"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tìm kiếm bài báo khoa học bằng tool papers."
+      }
+    },
+    {
+      "id": "G05_out_of_scope_math",
+      "phase": "B",
+      "query": "Tính giúp mình căn bậc hai của 144 bằng bao nhiêu?",
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Câu hỏi tính toán toán học đơn giản không cần gọi tool."
+      }
+    },
+    {
+      "id": "G06_multiturn_clarify_weather",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Xem dự báo thời tiết giúp mình với."
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Hỏi lại người dùng khi thiếu tên thành phố."
+      }
+    },
+    {
+      "id": "G07_multiturn_clarify_telegram",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Gửi bản tin AI mới nhất lên Telegram giúp mình."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Xin xác nhận yes_no trước khi gửi tin lên Telegram."
+      }
+    },
+    {
+      "id": "G08_multiturn_search_then_fetch",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm bài viết về Claude 3.5 Sonnet."
+        },
+        {
+          "role": "user",
+          "content": "Đọc giúp mình nội dung ở trang https://anthropic.com/claude-3-5"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://anthropic.com/claude-3-5"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Đọc nội dung trang web bằng tool fetch ở lượt thứ hai."
+      }
+    },
+    {
+      "id": "G09_multiturn_correction_city",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Thời tiết ở Saigon thế nào?"
+        },
+        {
+          "role": "user",
+          "content": "À không, xem giúp mình thời tiết ở Đà Nẵng mới đúng."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "city": "Da Nang"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Đính chính thông tin thành phố sang Da Nang."
+      }
+    },
+    {
+      "id": "G10_multiturn_carryover_topic",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin tức về GPT-4o trên web có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Thế còn mọi người bàn gì về GPT-4o trên Twitter?"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "GPT-4o"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Giữ ngữ cảnh chủ đề GPT-4o và chuyển sang social_search."
+      }
+    }
+  ]
 }
