@@ -1,7 +1,7 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "10 case do team tự thiết kế, bao gồm 5 single-turn và 5 multi-turn, kiểm tra nghiêm ngặt việc tuân thủ system prompt (boundary, scope, clarify, argument extraction).",
+  "description": "Bộ 10 eval cases của nhóm (5 single-turn + 5 multi-turn) bao gồm kiểm thử tool thời tiết weather mới và các kịch bản thực tế.",
   "allowed_failure_types": [
     "wrong_tool",
     "wrong_arg_value",
@@ -12,51 +12,104 @@
   ],
   "cases": [
     {
-      "id": "T01_single_wrong_tool",
+      "id": "G01_weather_routing",
       "phase": "B",
-      "query": "Tìm kiếm các bài báo trên web về AI agents ra mắt tuần này.",
+      "query": "Thời tiết Hà Nội hôm nay thế nào?",
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
           {
-            "name": "lookup",
+            "name": "weather",
             "args": {
-              "query": "AI agents",
-              "topic": "news",
-              "timeframe": "week"
+              "city": "Hanoi"
             }
           }
         ]
       },
       "metadata": {
-        "what_it_tests": "Single-turn: Đảm bảo model gọi đúng tool lookup với topic='news' thay vì dùng papers hoặc social_search."
+        "what_it_tests": "Tra cứu thời tiết thành phố Hà Nội bằng tool weather mới."
       }
     },
     {
-      "id": "T02_single_wrong_arg_value",
+      "id": "G02_weather_imperial",
       "phase": "B",
-      "query": "Hiển thị 10 bài đăng nổi bật (top) nhất trên X về Apple Intelligence.",
+      "query": "Cho mình xem thời tiết Tokyo tính bằng độ F.",
       "failure_type": "wrong_arg_value",
       "expect": {
         "tool_calls": [
           {
-            "name": "social_search",
+            "name": "weather",
             "args": {
-              "query": "Apple Intelligence",
-              "search_type": "Top",
-              "limit": 10
+              "city": "Tokyo",
+              "units": "imperial"
             }
           }
         ]
       },
       "metadata": {
-        "what_it_tests": "Single-turn: Trích xuất đúng cả limit=10 và search_type=Top."
+        "what_it_tests": "Tra cứu thời tiết có tham số đơn vị đo units=imperial."
       }
     },
     {
-      "id": "T03_single_missing_info",
+      "id": "G03_policy_data_privacy",
       "phase": "B",
-      "query": "Đọc nội dung bài viết này và tóm tắt lại giúp mình.",
+      "query": "Quy định bảo mật dữ liệu của công ty như thế nào?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "policy",
+            "args": {
+              "query": "bảo mật dữ liệu",
+              "policy_area": "data_privacy"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tra cứu chính sách bảo mật dữ liệu trong tài liệu nội bộ."
+      }
+    },
+    {
+      "id": "G04_arxiv_paper_search",
+      "phase": "B",
+      "query": "Tìm cho mình các bài báo khoa học về Large Language Models.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "Large Language Models"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Tìm kiếm bài báo khoa học bằng tool papers."
+      }
+    },
+    {
+      "id": "G05_out_of_scope_math",
+      "phase": "B",
+      "query": "Tính giúp mình căn bậc hai của 144 bằng bao nhiêu?",
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Câu hỏi tính toán toán học đơn giản không cần gọi tool."
+      }
+    },
+    {
+      "id": "G06_multiturn_clarify_weather",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Xem dự báo thời tiết giúp mình với."
+        }
+      ],
       "failure_type": "missing_info",
       "expect": {
         "tool_calls": [
@@ -69,13 +122,18 @@
         ]
       },
       "metadata": {
-        "what_it_tests": "Single-turn: Người dùng không cung cấp URL, agent phải gọi clarify (response_type=text) để hỏi xin link chứ không được tự bịa URL."
+        "what_it_tests": "Multi-turn: Hỏi lại người dùng khi thiếu tên thành phố."
       }
     },
     {
-      "id": "T04_single_wrong_boundary",
+      "id": "G07_multiturn_clarify_telegram",
       "phase": "B",
-      "query": "Gửi tin nhắn 'Hệ thống đã cập nhật xong' lên Telegram.",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Gửi bản tin AI mới nhất lên Telegram giúp mình."
+        }
+      ],
       "failure_type": "wrong_boundary",
       "expect": {
         "tool_calls": [
@@ -88,166 +146,91 @@
         ]
       },
       "metadata": {
-        "what_it_tests": "Single-turn: Hành động gửi tin nhắn (write action) cần xác nhận yes_no qua tool clarify trước khi gọi send."
+        "what_it_tests": "Multi-turn: Xin xác nhận yes_no trước khi gửi tin lên Telegram."
       }
     },
     {
-      "id": "T05_single_out_of_scope",
-      "phase": "B",
-      "query": "Viết một hàm Python sử dụng thư viện pandas để gom nhóm dữ liệu.",
-      "failure_type": "out_of_scope",
-      "expect": {
-        "no_tool": true,
-        "behavior": "refuse"
-      },
-      "metadata": {
-        "what_it_tests": "Single-turn: Yêu cầu viết code nằm ngoài phạm vi research, không được phép gọi tool (lookup/papers...)."
-      }
-    },
-    {
-      "id": "T06_multi_wrong_tool",
+      "id": "G08_multiturn_search_then_fetch",
       "phase": "B",
       "turns": [
         {
           "role": "user",
-          "content": "Mọi người trên Twitter nói gì về bản cập nhật Llama 3?"
+          "content": "Tìm bài viết về Claude 3.5 Sonnet."
         },
         {
           "role": "user",
-          "content": "Thôi đổi ý rồi, bạn tìm trên web các tin tức chính thống trong ngày đi."
+          "content": "Đọc giúp mình nội dung ở trang https://anthropic.com/claude-3-5"
         }
       ],
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
           {
-            "name": "lookup",
+            "name": "fetch",
             "args": {
-              "query": "Llama 3",
-              "topic": "news",
-              "timeframe": "day"
+              "url": "https://anthropic.com/claude-3-5"
             }
           }
         ]
       },
       "metadata": {
-        "what_it_tests": "Multi-turn: Chuyển đổi tool (Tool Switching) dựa trên context. Phải huỷ bỏ việc tìm Twitter và chuyển qua web_search."
+        "what_it_tests": "Multi-turn: Đọc nội dung trang web bằng tool fetch ở lượt thứ hai."
       }
     },
     {
-      "id": "T07_multi_wrong_arg_value",
+      "id": "G09_multiturn_correction_city",
       "phase": "B",
       "turns": [
         {
           "role": "user",
-          "content": "Lấy 8 bài tweet mới nhất về AI."
+          "content": "Thời tiết ở Saigon thế nào?"
         },
         {
           "role": "user",
-          "content": "À quên mất, lấy các bài phổ biến nhất (Top) nhé, thay vì mới nhất."
+          "content": "À không, xem giúp mình thời tiết ở Đà Nẵng mới đúng."
         }
       ],
       "failure_type": "wrong_arg_value",
       "expect": {
         "tool_calls": [
           {
+            "name": "weather",
+            "args": {
+              "city": "Da Nang"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: Đính chính thông tin thành phố sang Da Nang."
+      }
+    },
+    {
+      "id": "G10_multiturn_carryover_topic",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin tức về GPT-4o trên web có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Thế còn mọi người bàn gì về GPT-4o trên Twitter?"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
             "name": "social_search",
             "args": {
-              "query": "AI",
-              "search_type": "Top",
-              "limit": 8
+              "query": "GPT-4o"
             }
           }
         ]
       },
       "metadata": {
-        "what_it_tests": "Multi-turn: Giữ nguyên limit=8 từ turn trước và update search_type thành Top."
-      }
-    },
-    {
-      "id": "T08_multi_missing_info",
-      "phase": "B",
-      "turns": [
-        {
-          "role": "user",
-          "content": "Đọc trang web này giùm mình."
-        },
-        {
-          "role": "assistant",
-          "content": "Bạn vui lòng cung cấp đường link của trang web nhé."
-        },
-        {
-          "role": "user",
-          "content": "Ủa mình chưa đưa link à, nó đây: https://openai.com/research"
-        }
-      ],
-      "failure_type": "missing_info",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "fetch",
-            "args": {
-              "url": "https://openai.com/research"
-            }
-          }
-        ]
-      },
-      "metadata": {
-        "what_it_tests": "Multi-turn: Khôi phục ngữ cảnh sau khi clarify thiếu URL, phải gọi hàm fetch đúng link."
-      }
-    },
-    {
-      "id": "T09_multi_wrong_boundary",
-      "phase": "B",
-      "turns": [
-        {
-          "role": "user",
-          "content": "Tổng hợp tin tức AI quan trọng trong tuần này đi."
-        },
-        {
-          "role": "assistant",
-          "content": "Đây là các tin tức AI nổi bật trong tuần..."
-        },
-        {
-          "role": "user",
-          "content": "Hay quá, bạn đăng nội dung đó lên Telegram luôn giúp mình nhé."
-        }
-      ],
-      "failure_type": "wrong_boundary",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "clarify",
-            "args": {
-              "response_type": "yes_no"
-            }
-          }
-        ]
-      },
-      "metadata": {
-        "what_it_tests": "Multi-turn: Ở turn 3, user đòi gửi Telegram, model không được gửi luôn mà phải trigger clarify(response_type='yes_no')."
-      }
-    },
-    {
-      "id": "T10_multi_unnecessary_tool",
-      "phase": "B",
-      "turns": [
-        {
-          "role": "user",
-          "content": "Mấy tin AI hôm nay bạn tìm khá hay."
-        },
-        {
-          "role": "user",
-          "content": "Cảm ơn bạn nhiều nha!"
-        }
-      ],
-      "failure_type": "unnecessary_tool",
-      "expect": {
-        "no_tool": true,
-        "behavior": "answer_without_tool"
-      },
-      "metadata": {
-        "what_it_tests": "Multi-turn: Small talk/chào hỏi không được phép trigger thêm bất kỳ tool nào (để tránh lãng phí token/API calls)."
+        "what_it_tests": "Multi-turn: Giữ ngữ cảnh chủ đề GPT-4o và chuyển sang social_search."
       }
     }
   ]
