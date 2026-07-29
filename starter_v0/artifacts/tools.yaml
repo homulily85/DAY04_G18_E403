@@ -116,3 +116,13 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: weather
+    description: "Lấy thông tin thời tiết hiện tại cho một thành phố (nhiệt độ, độ ẩm, mô tả thời tiết, tốc độ gió)."
+    parameters:
+      type: object
+      properties:
+        city: {type: string, default: "", description: "Tên thành phố (ví dụ: Hanoi, Ho Chi Minh, Tokyo, London)"}
+        units: {type: string, enum: [metric, imperial], default: "metric", description: "Đơn vị đo nhiệt độ (metric = °C, imperial = °F)"}
+      required: [city]
+

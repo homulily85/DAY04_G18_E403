@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import json
 import os
 from datetime import datetime
@@ -7,6 +8,9 @@ from pathlib import Path
 from typing import Any
 
 import streamlit as st
+
+import tools
+importlib.reload(tools)
 
 from chat import (
     assistant_tool_message,
@@ -23,6 +27,7 @@ from env_loader import load_lab_env
 from providers import make_provider
 from tools import load_tool_declarations, to_openai_tools
 from versioning import artifact_version_dict, build_artifact_version
+
 
 # Set page config
 st.set_page_config(
@@ -268,11 +273,54 @@ with tab_chat:
                                 with st.popover(f"Result: {res.get('tool')}{err_status}"):
                                     st.json(result_data)
 
+                # Render Weather Widget Card if weather tool was used
+                weather_events = [
+                    e for e in tool_events
+                    if e.get("tool") == "weather" and isinstance(e.get("result"), dict) and "temp" in e.get("result", {})
+                ]
+                for w_event in weather_events:
+                    w_data = w_event["result"]
+                    w_city = w_data.get("city", "")
+                    w_country = w_data.get("country", "")
+                    w_temp = w_data.get("temp", "")
+                    w_units = w_data.get("units", "°C")
+                    w_feels = w_data.get("feels_like", "")
+                    w_hum = w_data.get("humidity", "")
+                    w_desc = w_data.get("description", "")
+                    w_wind = w_data.get("wind_speed", "")
+                    w_note = w_data.get("note", "")
+
+                    st.markdown(
+                        f"""
+                        <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 18px 24px; border-radius: 16px; margin: 12px 0; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h3 style="margin: 0; font-size: 1.5rem; font-weight: 700; color: white;">🌤️ {w_city}, {w_country}</h3>
+                                    <div style="font-size: 1.05rem; opacity: 0.95; margin-top: 4px; text-transform: capitalize;">{w_desc}</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 2.2rem; font-weight: 800; line-height: 1;">{w_temp}{w_units}</div>
+                                    <div style="font-size: 0.85rem; opacity: 0.85; margin-top: 4px;">Cảm giác như {w_feels}{w_units}</div>
+                                </div>
+                            </div>
+                            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 12px 0;">
+                            <div style="display: flex; justify-content: space-around; text-align: center; font-size: 0.9rem;">
+                                <div>💧 Độ ẩm: <b>{w_hum}%</b></div>
+                                <div>💨 Tốc độ gió: <b>{w_wind} m/s</b></div>
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                    if w_note:
+                        st.info(f"💡 {w_note}")
+
                 # Render final text answer
                 if turn.get("status") == "waiting_for_user":
                     st.warning(f"❓ **Cần thông tin bổ sung / Xác nhận:** {content}")
                 else:
                     st.markdown(content)
+
 
     # User Input Form
     if user_prompt := st.chat_input("Nhập câu hỏi nghiên cứu (ví dụ: 'Tweet mới nhất của Sam Altman là gì?')..."):

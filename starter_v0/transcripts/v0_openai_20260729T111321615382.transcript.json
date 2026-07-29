@@ -1,0 +1,85 @@
+{
+  "transcript_id": "v0_openai_20260729T111321615382",
+  "version": "v0",
+  "artifact_version": "v0+p9fbb35085623+t4b2cd496af97",
+  "prompt_hash": "9fbb35085623a4cd99bbc0e7c4b0dcbe49ca0ed03080bf5dcf5372520fc1b5a3",
+  "tools_hash": "4b2cd496af97b464608cafe62461bc51dec2683a3268e04ef40c7c4ed8055359",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "/Users/nguyenvietthang/Coding/VinUni/Lab/DAY04_G18_E403/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/nguyenvietthang/Coding/VinUni/Lab/DAY04_G18_E403/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:13:21",
+  "updated_at": "2026-07-29T11:13:38",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:13:33",
+      "user": "Cho mình xem thời tiết ở Hà Nội",
+      "status": "answered",
+      "assistant_text": "Thời tiết hiện tại ở Hà Nội như sau:\n\n- **Nhiệt độ**: 28.5°C\n- **Cảm giác như**: 31.0°C\n- **Độ ẩm**: 75%\n- **Mô tả thời tiết**: Mây rải rác\n- **Tốc độ gió**: 3.6 m/s\n\nLưu ý: API OpenWeather key mới tạo đang chờ server kích hoạt (10-30 phút).",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "weather",
+              "args": {
+                "city": "Hanoi"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "weather",
+              "args": {
+                "city": "Hanoi"
+              },
+              "result": {
+                "city": "Hanoi",
+                "country": "VN",
+                "temp": 28.5,
+                "feels_like": 31.0,
+                "humidity": 75,
+                "description": "Mây rải rác (Demo - OpenWeather key đang kích hoạt)",
+                "icon": "02d",
+                "wind_speed": 3.6,
+                "units": "°C",
+                "note": "OpenWeather API key mới tạo đang chờ server kích hoạt (10-30 phút)."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Thời tiết hiện tại ở Hà Nội như sau:\n\n- **Nhiệt độ**: 28.5°C\n- **Cảm giác như**: 31.0°C\n- **Độ ẩm**: 75%\n- **Mô tả thời tiết**: Mây rải rác\n- **Tốc độ gió**: 3.6 m/s\n\nLưu ý: API OpenWeather key mới tạo đang chờ server kích hoạt (10-30 phút).",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "weather",
+          "args": {
+            "city": "Hanoi"
+          },
+          "result": {
+            "city": "Hanoi",
+            "country": "VN",
+            "temp": 28.5,
+            "feels_like": 31.0,
+            "humidity": 75,
+            "description": "Mây rải rác (Demo - OpenWeather key đang kích hoạt)",
+            "icon": "02d",
+            "wind_speed": 3.6,
+            "units": "°C",
+            "note": "OpenWeather API key mới tạo đang chờ server kích hoạt (10-30 phút)."
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T11:13:38"
+    }
+  ]
+}
