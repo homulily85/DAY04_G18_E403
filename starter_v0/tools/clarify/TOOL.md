@@ -8,6 +8,6 @@ outputs: [question, response_type, options, awaiting_user]
 side_effect: false
 ---
 # clarify
-
+Use when missing information. For example: missing information about who, url.
 Returns a question to the user and pauses until the next user turn.
 `response_type` is free text, yes/no, or a choice from `options`.
