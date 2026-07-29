@@ -1,0 +1,150 @@
+{
+  "transcript_id": "v0_openai_20260729T105735129927",
+  "version": "v0",
+  "artifact_version": "v0+p9fbb35085623+t033a4ad8bc9b",
+  "prompt_hash": "9fbb35085623a4cd99bbc0e7c4b0dcbe49ca0ed03080bf5dcf5372520fc1b5a3",
+  "tools_hash": "033a4ad8bc9ba2770a024d8e7ff01e749932341c804646af434292b55a374dad",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "/Users/nguyenvietthang/Coding/VinUni/Lab/DAY04_G18_E403/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/nguyenvietthang/Coding/VinUni/Lab/DAY04_G18_E403/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T10:57:35",
+  "updated_at": "2026-07-29T10:57:51",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T10:57:41",
+      "user": "thời tiết hôm nay ở Hà Nội",
+      "status": "answered",
+      "assistant_text": "Hôm nay, thời tiết ở Hà Nội có nhiều mây, với mưa vừa và mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất dao động từ 24-26 độ C, và cao nhất từ 31-33 độ C. Dưới đây là một số thông tin chi tiết:\n\n1. **Nguồn: Tuổi Trẻ**\n   - [Thời tiết hôm nay 29-7: Cả nước mưa dông, cảnh báo lũ ...](https://tuoitre.vn/thoi-tiet-hom-nay-29-7-ca-nuoc-mua-dong-canh-bao-lu-tren-nhieu-song-10026072816334801.htm)\n   - Dự báo thời tiết hôm nay: Cả nước mưa dông, cảnh báo lũ nhiều sông. Hà Nội có mưa vừa, mưa to, nhiệt độ thấp nhất 24-26 độ C, cao nhất 31-33 độ C.\n\n2. **Nguồn: Thoitiet.vn**\n   - [Dự báo thời tiết hàng giờ tại Hà Nội chính xác](https://thoitiet.vn/ha-noi/theo-gio)\n   - Cập nhật thời tiết cho thấy mưa nhẹ, nhiệt độ hiện tại là 34.7°C, cảm giác như 41.8°C.\n\nNếu bạn cần thêm thông tin hoặc có câu hỏi khác, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "thời tiết hôm nay ở Hà Nội",
+                "topic": "general"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "thời tiết hôm nay ở Hà Nội",
+                "topic": "general"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "thời tiết hôm nay ở Hà Nội",
+                "topic": "general",
+                "timeframe": "week",
+                "items": [
+                  {
+                    "title": "Thời tiết hôm nay 29-7: Cả nước mưa dông, cảnh báo lũ ...",
+                    "url": "https://tuoitre.vn/thoi-tiet-hom-nay-29-7-ca-nuoc-mua-dong-canh-bao-lu-tren-nhieu-song-10026072816334801.htm",
+                    "source": "tuoitre.vn",
+                    "summary": "Ngoài ra cơ quan chức năng cũng cảnh báo lũ quét, sạt lở đất, sụt lún đất do mưa lũ hoặc dòng chảy trên khu vực các tỉnh Bắc Bộ và Thanh Hóa, Nghệ An.\n\nDự báo thời tiết hôm nay: Cả nước mưa dông, cảnh báo lũ nhiều sông - Ảnh 2.\n\n#### Bão Dolphin ở tây bắc Thái Bình Dương có thể mạnh lên thành siêu bãoĐỌC NGAY\n\n## Dự báo thời tiết chi tiết hôm nay 29-7:\n\nTP Hà Nội nhiều mây, đêm và sáng sớm mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 24-26 độ C, cao nhất 31-33 độ C. [...] Cao nguyên Trung Bộ có mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 20-23 độ C, cao nhất 26-29 độ C.\n\nNam Bộ có mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 23-26 độ C, cao nhất 28-31 độ C.\n\nTP.HCM có mây, mưa vừa, mưa to và rải rác có dông, có nơi mưa rất to. Nhiệt độ thấp nhất 24-26 độ C, cao nhất 29-31 độ C.\n\nDự báo thời tiết hôm nay: Cả nước mưa dông, cảnh báo lũ nhiều sông - Ảnh 2.\n\nDự báo thời tiết hôm nay 29-7 - Đồ họa: NGỌC THÀNH [...] Tây Bắc Bộ nhiều mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 22-25 độ C, cao nhất 29-32 độ C.\n\nĐông Bắc Bộ nhiều mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 23-26 độ C, cao nhất 30-33 độ C.\n\nThanh Hóa đến Huế có mây, mưa rào, có nơi mưa to. Nhiệt độ thấp nhất 24-27 độ C, cao nhất 31-34 độ C.\n\nDuyên hải Nam Trung Bộ có mây, mưa rào, có nơi mưa to. Nhiệt độ thấp nhất 25-28 độ C, cao nhất 32-35 độ C.",
+                    "score": 0.82560414
+                  },
+                  {
+                    "title": "Dự báo thời tiết hàng giờ tại Hà Nội chính xác - Thoitiet.vn",
+                    "url": "https://thoitiet.vn/ha-noi/theo-gio",
+                    "source": "thoitiet.vn",
+                    "summary": "Mưa nhẹ\n\nHà Nội\n\nĐã cập nhật 17 phút trước\n\nMy thưa 34.7°\n\nMy thưa\n\nCảm giác như 41.8°.\n\n### Dự báo những ngày tới\n\nHôm nay Ngày mai 3 ngày 5 ngày\n\n7 ngày 10 ngày 15 ngày 30 ngày\n\n###### Mặt trời mọc/lặn\n\n05:27  18:38\n\n###### Độ ẩm\n\n### 55%\n\n###### Áp suất\n\n### 999 mb\n\n###### Tầm nhìn\n\n### 10 km\n\n### 1.52 km/giờ\n\n###### Điểm ngưng\n\n### 24.7 °C\n\n###### Chỉ số UV\n\n### 0.13\n\n### Tin tức thời tiết\n\nTia UV là gì? Cách bảo vệ da dưới tác hại của tia UV [...] 0\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 1003 mb\n\nMưa vừa\n\n  \n\n## 28/07\n\n26.6°C   /  27.2°C\n\nMưa nhẹ  Mưa nhẹ\n\n93%\n\n1.92 km/giờ\n\n###### Chỉ số UV\n\n0\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 1003 mb\n\nMưa nhẹ\n\n  \n\n## 01:00\n\n25.9°C   /  26.1°C\n\nMưa vừa  Mưa vừa\n\n93%\n\n1.53 km/giờ\n\n###### Chỉ số UV\n\n0\n\n###### Tầm nhìn\n\n9.47 km\n\n###### Áp suất\n\n### 1003 mb\n\nMưa vừa\n\n  \n\n## 02:00\n\n25.9°C   /  26°C\n\nMưa vừa  Mưa vừa\n\n93%\n\n0.89 km/giờ\n\n###### Chỉ số UV\n\n0\n\n###### Tầm nhìn\n\n7.22 km [...] Thành phố của bạn:   Hà Nội   Thay đổi\n\nGiờ địa phương:  18:39 | 26/07/2026\n\n# Dự báo thời tiết Hà Nội theo giờ\n\n## 18:00\n\n34.2°C   /  41.4°C\n\nMy thưa  My thưa\n\n1.52 km/giờ\n\n###### Chỉ số UV\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 999 mb\n\nMy thưa\n\n  \n\n## 19:00\n\n34.9°C   /  40.5°C\n\nMy thưa  My thưa\n\n4.07 km/giờ\n\n###### Chỉ số UV\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 999 mb\n\nMy thưa\n\n  \n\n## 20:00\n\n33.1°C   /  39.1°C\n\nMy cụm  My cụm\n\n4.3 km/giờ\n\n###### Chỉ số UV\n\n0",
+                    "score": 0.7300017
+                  },
+                  {
+                    "title": "Thời tiết hôm nay 24.7: Miền Bắc mưa to diện rộng, có nơi mưa rất to",
+                    "url": "https://laodong.vn/video-xa-hoi/thoi-tiet-hom-nay-247-mien-bac-mua-to-dien-rong-co-noi-mua-rat-to-1739712.ldo",
+                    "source": "laodong.vn",
+                    "summary": "Dự báo thời tiết hôm nay Dự báo thời tiết Hà Nội Dự báo thời tiết\n\nBình luận:\n\nBạn nghĩ gì về nội dung này?\n\nBạn cần đăng nhập để gửi bình luận.\n\n Gửi bình luận\n\nDự báo thời gian miền Bắc mưa to, cảnh báo nguy cơ thời tiết nguy hiểm\n\n## Dự báo thời gian miền Bắc mưa to, cảnh báo nguy cơ thời tiết nguy hiểm\n\nÁp thấp nhiệt đới khả năng mạnh lên thành bão 24 giờ tới, dự báo đường đi\n\n## Áp thấp nhiệt đới khả năng mạnh lên thành bão 24 giờ tới, dự báo đường đi [...] ## Hà Nội triển khai mô hình phục hồi chức năng ngay tại trạm y tế\n\nVăn hóa - Giải trí \n\nGiờ thứ 9 số 207: Dối trá - Phần 2\n\n## Giờ thứ 9 số 207: Dối trá - Phần 2\n\nXem người khiếm thị biểu diễn nhạc ngũ m chuyên nghiệp\n\n## Xem người khiếm thị biểu diễn nhạc ngũ m chuyên nghiệp\n\nDịch vụ thn thiện giúp Hà Nội ghi điểm với du khách quốc tế\n\n## Dịch vụ thn thiện giúp Hà Nội ghi điểm với du khách quốc tế\n\nThể thao \n\nLần đầu tiên các vận động viên tranh tài giải chèo SUP tại Đà Nẵng [...] ## Xác định tọa độ vị trí nghi có mộ liệt sĩ Việt Nam do người dn Lào chỉ dẫn\n\nXã hội \n\nSáng miền Ty 28.7: Chăm lo người lao động qua bữa cơm Công đoàn\n\n## Sáng miền Ty 28.7: Chăm lo người lao động qua bữa cơm Công đoàn\n\nDự báo các tỉnh mưa to nhất từ nay đến đêm mai 28.7, có nơi trên 250mm\n\n## Dự báo các tỉnh mưa to nhất từ nay đến đêm mai 28.7, có nơi trên 250mm\n\nHà Nội triển khai mô hình phục hồi chức năng ngay tại trạm y tế",
+                    "score": 0.71377134
+                  },
+                  {
+                    "title": "Dự báo thời tiết - Ngày và đêm 28/07/2026",
+                    "url": "https://www.nchmf.gov.vn/kttv/vi-VN/1/thoi-tiet-dat-lien-24h-12h2-15.html",
+                    "source": "nchmf.gov.vn",
+                    "summary": "Có mây, có mưa rào và dông rải rác, cục bộ có nơi mưa to. Phía Bắc gió nhẹ, phía Nam gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét, mưa đá và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 24-27 độ.  \nNhiệt độ cao nhất từ : 31-34 độ.\n\nCó mây, có mưa rào và dông rải rác, cục bộ có nơi mưa to. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét, mưa đá và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 25-28 độ.  \nNhiệt độ cao nhất từ : 32-35 độ. [...] Có mây, sáng có mưa vừa, mưa to và dông, cục bộ có nơi mưa rất to; sau có mưa rào và dông rải rác, cục bộ có nơi mưa to. Gió nhẹ. Trong mưa dông có khả năng xảy ra lốc, sét, mưa đá và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 23-26 độ, có nơi dưới 22 độ.  \nNhiệt độ cao nhất từ : 29-32 độ, riêng khu Tây Bắc 27-29 độ. [...] Có mây, có mưa vừa, mưa to và rải rác có dông, cục bộ có nơi mưa rất to. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 20-23 độ, có nơi dưới 20 độ.  \nNhiệt độ cao nhất từ : 27-30 độ.\n\nCó mây, có mưa vừa, mưa to và rải rác có dông, cục bộ có nơi mưa rất to. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 24-27 độ.  \nNhiệt độ cao nhất từ : 29-32 độ.",
+                    "score": 0.444493
+                  },
+                  {
+                    "title": "Thời tiết hôm nay 29.7: Miền Bắc tiếp tục mưa to, có nơi ...",
+                    "url": "https://laodong.vn/ban-tin/thoi-tiet-hom-nay-297-mien-bac-tiep-tuc-mua-to-co-noi-mua-rat-to-1742273.ldo",
+                    "source": "laodong.vn",
+                    "summary": "Thời tiết hôm nay 29.7, Bắc Bộ sáng sớm có mưa vừa, mưa to và dông, cục bộ có nơi mưa rất to. Từ chiều nay, mưa lớn diện rộng có khả năng giảm dần.",
+                    "score": 0.3939683
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Hôm nay, thời tiết ở Hà Nội có nhiều mây, với mưa vừa và mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất dao động từ 24-26 độ C, và cao nhất từ 31-33 độ C. Dưới đây là một số thông tin chi tiết:\n\n1. **Nguồn: Tuổi Trẻ**\n   - [Thời tiết hôm nay 29-7: Cả nước mưa dông, cảnh báo lũ ...](https://tuoitre.vn/thoi-tiet-hom-nay-29-7-ca-nuoc-mua-dong-canh-bao-lu-tren-nhieu-song-10026072816334801.htm)\n   - Dự báo thời tiết hôm nay: Cả nước mưa dông, cảnh báo lũ nhiều sông. Hà Nội có mưa vừa, mưa to, nhiệt độ thấp nhất 24-26 độ C, cao nhất 31-33 độ C.\n\n2. **Nguồn: Thoitiet.vn**\n   - [Dự báo thời tiết hàng giờ tại Hà Nội chính xác](https://thoitiet.vn/ha-noi/theo-gio)\n   - Cập nhật thời tiết cho thấy mưa nhẹ, nhiệt độ hiện tại là 34.7°C, cảm giác như 41.8°C.\n\nNếu bạn cần thêm thông tin hoặc có câu hỏi khác, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "thời tiết hôm nay ở Hà Nội",
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "thời tiết hôm nay ở Hà Nội",
+            "topic": "general",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Thời tiết hôm nay 29-7: Cả nước mưa dông, cảnh báo lũ ...",
+                "url": "https://tuoitre.vn/thoi-tiet-hom-nay-29-7-ca-nuoc-mua-dong-canh-bao-lu-tren-nhieu-song-10026072816334801.htm",
+                "source": "tuoitre.vn",
+                "summary": "Ngoài ra cơ quan chức năng cũng cảnh báo lũ quét, sạt lở đất, sụt lún đất do mưa lũ hoặc dòng chảy trên khu vực các tỉnh Bắc Bộ và Thanh Hóa, Nghệ An.\n\nDự báo thời tiết hôm nay: Cả nước mưa dông, cảnh báo lũ nhiều sông - Ảnh 2.\n\n#### Bão Dolphin ở tây bắc Thái Bình Dương có thể mạnh lên thành siêu bãoĐỌC NGAY\n\n## Dự báo thời tiết chi tiết hôm nay 29-7:\n\nTP Hà Nội nhiều mây, đêm và sáng sớm mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 24-26 độ C, cao nhất 31-33 độ C. [...] Cao nguyên Trung Bộ có mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 20-23 độ C, cao nhất 26-29 độ C.\n\nNam Bộ có mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 23-26 độ C, cao nhất 28-31 độ C.\n\nTP.HCM có mây, mưa vừa, mưa to và rải rác có dông, có nơi mưa rất to. Nhiệt độ thấp nhất 24-26 độ C, cao nhất 29-31 độ C.\n\nDự báo thời tiết hôm nay: Cả nước mưa dông, cảnh báo lũ nhiều sông - Ảnh 2.\n\nDự báo thời tiết hôm nay 29-7 - Đồ họa: NGỌC THÀNH [...] Tây Bắc Bộ nhiều mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 22-25 độ C, cao nhất 29-32 độ C.\n\nĐông Bắc Bộ nhiều mây, mưa vừa, mưa to, có nơi mưa rất to. Nhiệt độ thấp nhất 23-26 độ C, cao nhất 30-33 độ C.\n\nThanh Hóa đến Huế có mây, mưa rào, có nơi mưa to. Nhiệt độ thấp nhất 24-27 độ C, cao nhất 31-34 độ C.\n\nDuyên hải Nam Trung Bộ có mây, mưa rào, có nơi mưa to. Nhiệt độ thấp nhất 25-28 độ C, cao nhất 32-35 độ C.",
+                "score": 0.82560414
+              },
+              {
+                "title": "Dự báo thời tiết hàng giờ tại Hà Nội chính xác - Thoitiet.vn",
+                "url": "https://thoitiet.vn/ha-noi/theo-gio",
+                "source": "thoitiet.vn",
+                "summary": "Mưa nhẹ\n\nHà Nội\n\nĐã cập nhật 17 phút trước\n\nMy thưa 34.7°\n\nMy thưa\n\nCảm giác như 41.8°.\n\n### Dự báo những ngày tới\n\nHôm nay Ngày mai 3 ngày 5 ngày\n\n7 ngày 10 ngày 15 ngày 30 ngày\n\n###### Mặt trời mọc/lặn\n\n05:27  18:38\n\n###### Độ ẩm\n\n### 55%\n\n###### Áp suất\n\n### 999 mb\n\n###### Tầm nhìn\n\n### 10 km\n\n### 1.52 km/giờ\n\n###### Điểm ngưng\n\n### 24.7 °C\n\n###### Chỉ số UV\n\n### 0.13\n\n### Tin tức thời tiết\n\nTia UV là gì? Cách bảo vệ da dưới tác hại của tia UV [...] 0\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 1003 mb\n\nMưa vừa\n\n  \n\n## 28/07\n\n26.6°C   /  27.2°C\n\nMưa nhẹ  Mưa nhẹ\n\n93%\n\n1.92 km/giờ\n\n###### Chỉ số UV\n\n0\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 1003 mb\n\nMưa nhẹ\n\n  \n\n## 01:00\n\n25.9°C   /  26.1°C\n\nMưa vừa  Mưa vừa\n\n93%\n\n1.53 km/giờ\n\n###### Chỉ số UV\n\n0\n\n###### Tầm nhìn\n\n9.47 km\n\n###### Áp suất\n\n### 1003 mb\n\nMưa vừa\n\n  \n\n## 02:00\n\n25.9°C   /  26°C\n\nMưa vừa  Mưa vừa\n\n93%\n\n0.89 km/giờ\n\n###### Chỉ số UV\n\n0\n\n###### Tầm nhìn\n\n7.22 km [...] Thành phố của bạn:   Hà Nội   Thay đổi\n\nGiờ địa phương:  18:39 | 26/07/2026\n\n# Dự báo thời tiết Hà Nội theo giờ\n\n## 18:00\n\n34.2°C   /  41.4°C\n\nMy thưa  My thưa\n\n1.52 km/giờ\n\n###### Chỉ số UV\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 999 mb\n\nMy thưa\n\n  \n\n## 19:00\n\n34.9°C   /  40.5°C\n\nMy thưa  My thưa\n\n4.07 km/giờ\n\n###### Chỉ số UV\n\n###### Tầm nhìn\n\n10 km\n\n###### Áp suất\n\n### 999 mb\n\nMy thưa\n\n  \n\n## 20:00\n\n33.1°C   /  39.1°C\n\nMy cụm  My cụm\n\n4.3 km/giờ\n\n###### Chỉ số UV\n\n0",
+                "score": 0.7300017
+              },
+              {
+                "title": "Thời tiết hôm nay 24.7: Miền Bắc mưa to diện rộng, có nơi mưa rất to",
+                "url": "https://laodong.vn/video-xa-hoi/thoi-tiet-hom-nay-247-mien-bac-mua-to-dien-rong-co-noi-mua-rat-to-1739712.ldo",
+                "source": "laodong.vn",
+                "summary": "Dự báo thời tiết hôm nay Dự báo thời tiết Hà Nội Dự báo thời tiết\n\nBình luận:\n\nBạn nghĩ gì về nội dung này?\n\nBạn cần đăng nhập để gửi bình luận.\n\n Gửi bình luận\n\nDự báo thời gian miền Bắc mưa to, cảnh báo nguy cơ thời tiết nguy hiểm\n\n## Dự báo thời gian miền Bắc mưa to, cảnh báo nguy cơ thời tiết nguy hiểm\n\nÁp thấp nhiệt đới khả năng mạnh lên thành bão 24 giờ tới, dự báo đường đi\n\n## Áp thấp nhiệt đới khả năng mạnh lên thành bão 24 giờ tới, dự báo đường đi [...] ## Hà Nội triển khai mô hình phục hồi chức năng ngay tại trạm y tế\n\nVăn hóa - Giải trí \n\nGiờ thứ 9 số 207: Dối trá - Phần 2\n\n## Giờ thứ 9 số 207: Dối trá - Phần 2\n\nXem người khiếm thị biểu diễn nhạc ngũ m chuyên nghiệp\n\n## Xem người khiếm thị biểu diễn nhạc ngũ m chuyên nghiệp\n\nDịch vụ thn thiện giúp Hà Nội ghi điểm với du khách quốc tế\n\n## Dịch vụ thn thiện giúp Hà Nội ghi điểm với du khách quốc tế\n\nThể thao \n\nLần đầu tiên các vận động viên tranh tài giải chèo SUP tại Đà Nẵng [...] ## Xác định tọa độ vị trí nghi có mộ liệt sĩ Việt Nam do người dn Lào chỉ dẫn\n\nXã hội \n\nSáng miền Ty 28.7: Chăm lo người lao động qua bữa cơm Công đoàn\n\n## Sáng miền Ty 28.7: Chăm lo người lao động qua bữa cơm Công đoàn\n\nDự báo các tỉnh mưa to nhất từ nay đến đêm mai 28.7, có nơi trên 250mm\n\n## Dự báo các tỉnh mưa to nhất từ nay đến đêm mai 28.7, có nơi trên 250mm\n\nHà Nội triển khai mô hình phục hồi chức năng ngay tại trạm y tế",
+                "score": 0.71377134
+              },
+              {
+                "title": "Dự báo thời tiết - Ngày và đêm 28/07/2026",
+                "url": "https://www.nchmf.gov.vn/kttv/vi-VN/1/thoi-tiet-dat-lien-24h-12h2-15.html",
+                "source": "nchmf.gov.vn",
+                "summary": "Có mây, có mưa rào và dông rải rác, cục bộ có nơi mưa to. Phía Bắc gió nhẹ, phía Nam gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét, mưa đá và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 24-27 độ.  \nNhiệt độ cao nhất từ : 31-34 độ.\n\nCó mây, có mưa rào và dông rải rác, cục bộ có nơi mưa to. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét, mưa đá và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 25-28 độ.  \nNhiệt độ cao nhất từ : 32-35 độ. [...] Có mây, sáng có mưa vừa, mưa to và dông, cục bộ có nơi mưa rất to; sau có mưa rào và dông rải rác, cục bộ có nơi mưa to. Gió nhẹ. Trong mưa dông có khả năng xảy ra lốc, sét, mưa đá và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 23-26 độ, có nơi dưới 22 độ.  \nNhiệt độ cao nhất từ : 29-32 độ, riêng khu Tây Bắc 27-29 độ. [...] Có mây, có mưa vừa, mưa to và rải rác có dông, cục bộ có nơi mưa rất to. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 20-23 độ, có nơi dưới 20 độ.  \nNhiệt độ cao nhất từ : 27-30 độ.\n\nCó mây, có mưa vừa, mưa to và rải rác có dông, cục bộ có nơi mưa rất to. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh.\n  \nNhiệt độ thấp nhất từ : 24-27 độ.  \nNhiệt độ cao nhất từ : 29-32 độ.",
+                "score": 0.444493
+              },
+              {
+                "title": "Thời tiết hôm nay 29.7: Miền Bắc tiếp tục mưa to, có nơi ...",
+                "url": "https://laodong.vn/ban-tin/thoi-tiet-hom-nay-297-mien-bac-tiep-tuc-mua-to-co-noi-mua-rat-to-1742273.ldo",
+                "source": "laodong.vn",
+                "summary": "Thời tiết hôm nay 29.7, Bắc Bộ sáng sớm có mưa vừa, mưa to và dông, cục bộ có nơi mưa rất to. Từ chiều nay, mưa lớn diện rộng có khả năng giảm dần.",
+                "score": 0.3939683
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T10:57:51"
+    }
+  ]
+}

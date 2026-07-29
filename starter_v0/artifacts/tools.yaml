@@ -9,7 +9,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Gửi một câu hỏi cho người dùng để xác nhận thông tin, hoặc xác nhận các lựa chọn."
     parameters:
       type: object
       properties:
