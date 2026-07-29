@@ -32,6 +32,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown("<div id='main-app-top'></div><a href='#main-app-top' class='back-to-top'>⬆️ Top</a>", unsafe_allow_html=True)
+
+
 # Custom CSS for theme-adaptive (Light & Dark mode) aesthetics and evidence layout
 st.markdown(
     """
@@ -101,6 +104,30 @@ st.markdown(
         padding: 2px 8px;
         border-radius: 4px;
         font-family: monospace;
+    }
+    /* Floating Jump to Top button fixed at bottom-right */
+    .back-to-top {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        background: var(--secondary-background-color, #ffffff);
+        color: #2563eb !important;
+        border: 2px solid #2563eb;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 30px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none !important;
+        z-index: 99999;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+    .back-to-top:hover {
+        background: #2563eb;
+        color: #ffffff !important;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
     }
     </style>
     """,
@@ -316,7 +343,6 @@ with tab_chat:
                 st.rerun()
 
 with tab_inspector:
-    st.markdown("<div id='inspector-top'></div>", unsafe_allow_html=True)
     st.header("📊 Transcript & Evidence Inspector")
     st.markdown("Xem lại chi tiết bằng chứng JSON log của các phiên chạy agent.")
 
@@ -326,41 +352,31 @@ with tab_inspector:
     if not transcript_files:
         st.info("Chưa có file transcript nào được lưu. Hãy thực hiện một câu lệnh trong tab Chat!")
     else:
+        # Initialize selectbox state key if missing or invalid
+        if "inspector_selectbox" not in st.session_state or st.session_state["inspector_selectbox"] not in transcript_files:
+            st.session_state["inspector_selectbox"] = transcript_files[0]
+
         # Action buttons for quick navigation
-        col_act1, col_act2, col_act3 = st.columns([1, 1, 1])
-        
-        if "selected_transcript_file" not in st.session_state or st.session_state.selected_transcript_file not in transcript_files:
-            st.session_state.selected_transcript_file = transcript_files[0]
+        col_act1, col_act2 = st.columns([1, 1])
 
         with col_act1:
             if st.button("⚡ Xem Log mới nhất (Latest)", use_container_width=True, type="primary"):
-                st.session_state.selected_transcript_file = transcript_files[0]
+                st.session_state["inspector_selectbox"] = transcript_files[0]
                 st.rerun()
 
         with col_act2:
             current_path = st.session_state.get("transcript_path")
             if current_path in transcript_files:
                 if st.button("💬 Xem phiên Chat hiện tại", use_container_width=True):
-                    st.session_state.selected_transcript_file = current_path
+                    st.session_state["inspector_selectbox"] = current_path
                     st.rerun()
-
-        with col_act3:
-            st.markdown(
-                "<a href='#inspector-top' style='display:block; text-align:center; padding:7px 14px; background:var(--secondary-background-color); color:var(--text-color); border:1px solid rgba(128,128,128,0.3); border-radius:8px; text-decoration:none; font-weight:600;'>⬆️ Jump to Top</a>",
-                unsafe_allow_html=True,
-            )
-
-        selected_idx = 0
-        if st.session_state.selected_transcript_file in transcript_files:
-            selected_idx = transcript_files.index(st.session_state.selected_transcript_file)
 
         selected_file = st.selectbox(
             "Chọn file Transcript JSON:",
             options=transcript_files,
-            index=selected_idx,
+            key="inspector_selectbox",
             format_func=lambda p: f"{'🔴 [Hiện tại] ' if p == st.session_state.get('transcript_path') else '📄 '}{p.name}",
         )
-        st.session_state.selected_transcript_file = selected_file
 
         if selected_file:
             try:
@@ -373,13 +389,7 @@ with tab_inspector:
                 st.markdown("---")
                 st.markdown("### Raw JSON Content & Evidence")
                 st.json(content)
-
-                # Jump to top button at the bottom of JSON content
-                st.markdown("<br>", unsafe_allow_html=True)
-                st.markdown(
-                    "<div style='text-align: right;'><a href='#inspector-top' style='display:inline-block; padding:8px 18px; background:var(--secondary-background-color); color:var(--text-color); border:1px solid rgba(128,128,128,0.3); border-radius:8px; text-decoration:none; font-weight:600;'>⬆️ Jump to Top (Trở về đầu trang)</a></div>",
-                    unsafe_allow_html=True,
-                )
             except Exception as e:
                 st.error(f"Lỗi đọc file: {e}")
+
 
