@@ -9,17 +9,17 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Kiểu trả lời. Dùng 'text' khi cần xin thông tin (URL, handle). Dùng 'yes_no' khi cần xin phép/xác nhận trước khi gửi hoặc đăng bài.."
+    description: "Gửi một câu hỏi cho người dùng để xác nhận thông tin, hoặc xác nhận các lựa chọn."
     parameters:
       type: object
       properties:
         question: {type: string, default: "", description: "Câu hỏi"}
         response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
         options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
-      required: [question, response_type]
+      required: [question]
 
   - name: timeline
-    description: "Khoảng thời gian. Dùng 'day' cho hôm nay, 'week' cho tuần này."
+    description: "Lấy các bài đăng gần đây."
     parameters:
       type: object
       properties:
@@ -43,7 +43,7 @@ tools:
       type: object
       properties:
         query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại tìm kiếm. BẮT BUỘC dùng 'news' nếu người dùng hỏi về 'tin tức', 'hôm nay', 'tin tức mới'."}
+        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
         timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
@@ -116,3 +116,13 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: weather
+    description: "Lấy thông tin thời tiết hiện tại cho một thành phố (nhiệt độ, độ ẩm, mô tả thời tiết, tốc độ gió)."
+    parameters:
+      type: object
+      properties:
+        city: {type: string, default: "", description: "Tên thành phố (ví dụ: Hanoi, Ho Chi Minh, Tokyo, London)"}
+        units: {type: string, enum: [metric, imperial], default: "metric", description: "Đơn vị đo nhiệt độ (metric = °C, imperial = °F)"}
+      required: [city]
+
