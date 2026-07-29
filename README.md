@@ -1,5 +1,17 @@
 # Day 04 Lab v2 — Research Agent Tool Eval
 
+## Thông tin nhóm
+
+| STT | Họ và tên | MSSV |
+|---:|---|---|
+| 1 | Nguyễn Văn Đạt | 2A202601969 |
+| 2 | Nguyễn Trọng Toàn | 2A202601493 |
+| 3 | Hoàng Nguyễn Phong | 2A202601077 |
+| 6 | Nguyễn Kim Trung Đức | 2A202601325 |
+| 7 | Nguyễn Việt Thắng | 2A202601321 |
+| 9 | Lê Hồng Đức | 2A202601313 |
+| 11 | Kim Duy Hưng | 2A202501763 |
+
 ## Brief
 
 Trong lab này, nhóm build một research agent nhỏ nhưng chạy thật. Agent nhận request của user, chọn tool, truyền arguments, chạy tool thật, lưu full JSON log, rồi dùng log đó để tối ưu prompt/tool declaration qua nhiều version.
